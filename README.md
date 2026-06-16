@@ -1,34 +1,42 @@
-3D Print Studio — E-Commerce Platform
+# 3D Print Studio — E-Commerce Platform
 
 A mobile-first e-commerce platform for a Malaysian 3D printing business, built as a full-stack portfolio project. Customers configure a product part-by-part, submit an order, and are redirected to WhatsApp with a pre-filled order summary — no payment gateway required (out-of-band DuitNow/TNG flow).
 
+---
 
-Live Demo
+## Live Demo
 
+> _Deploy links go here once Railway + Vercel are live._
 
-Deploy links go here once Railway + Vercel are live.
+---
 
+## Features
 
+- **Product configurator** — per-part colour selection (Body, Head, Switch) with live price calculation
+- **WhatsApp order flow** — pre-filled `wa.me` message generated from cart; no Stripe/payment gateway needed
+- **Order management** — password-protected admin panel; status progression: `PENDING → CONFIRMED → PRINTING → DONE`
+- **Flexible catalogue schema** — `Product → OptionGroup → OptionValue` pattern; add new product types (fidget toys, bags) with zero schema migration
+- **Denormalised order snapshots** — `selectedOptions` stored as JSON at order time; historical accuracy preserved if catalogue labels change
 
+---
 
-Features
+## Tech Stack
 
+| Layer      | Technology                                      |
+| ---------- | ----------------------------------------------- |
+| Backend    | Node.js, Express, TypeScript                    |
+| ORM        | Prisma                                          |
+| Database   | PostgreSQL (Railway)                            |
+| Validation | Zod                                             |
+| Frontend   | React, TypeScript, Vite, Tailwind CSS           |
+| State      | Zustand                                         |
+| Hosting    | Railway (API) + Vercel (client)                 |
 
-Product configurator — per-part colour selection (Body, Head, Switch) with live price calculation
-WhatsApp order flow — pre-filled wa.me message generated from cart; no Stripe/payment gateway needed
-Order management — password-protected admin panel; status progression: PENDING → CONFIRMED → PRINTING → DONE
-Flexible catalogue schema — Product → OptionGroup → OptionValue pattern; add new product types (fidget toys, bags) with zero schema migration
-Denormalised order snapshots — selectedOptions stored as JSON at order time; historical accuracy preserved if catalogue labels change
+---
 
+## Architecture
 
-
-Tech Stack
-
-LayerTechnologyBackendNode.js, Express, TypeScriptORMPrismaDatabasePostgreSQL (Railway)ValidationZodFrontendReact, TypeScript, Vite, Tailwind CSSStateZustandHostingRailway (API) + Vercel (client)
-
-
-Architecture
-
+```
 3d-print-studio/
 ├── server/
 │   ├── prisma/           # schema, migrations, seed
@@ -48,14 +56,17 @@ Architecture
 │       └── api/          # Axios instances + typed request fns
 └── shared/
     └── types/            # Single source of truth — imported by both sides
+```
 
-Why repositories? All Prisma calls are isolated in the repository layer. Swapping ORM or database later only touches that layer — controllers and services stay unchanged.
+**Why repositories?** All Prisma calls are isolated in the repository layer. Swapping ORM or database later only touches that layer — controllers and services stay unchanged.
 
-Why shared/types? OrderPayload and related types are defined once and imported by both the frontend (building the request) and backend (Zod schema validation). Prevents silent drift between client payload shape and server expectations.
+**Why shared/types?** `OrderPayload` and related types are defined once and imported by both the frontend (building the request) and backend (Zod schema validation). Prevents silent drift between client payload shape and server expectations.
 
+---
 
-Data Model
+## Data Model
 
+```
 Product
   └── OptionGroup (e.g. "Body Colour", order=0)
         └── OptionValue (label, hex, priceModifier)
@@ -65,12 +76,15 @@ Order
         ├── productId (live FK)
         ├── productName (denormalised snapshot)
         └── selectedOptions: Json  ← snapshot at purchase time
+```
 
-Each of the 8 country variants is a separate Product row — not variants of one parent. This allows per-country pricing, descriptions, and images without a polymorphic hack.
+Each of the 8 country variants is a separate `Product` row — not variants of one parent. This allows per-country pricing, descriptions, and images without a polymorphic hack.
 
+---
 
-Order Flow
+## Order Flow
 
+```
 Customer configures product
         ↓
 Submits order form (name + phone)
@@ -91,32 +105,41 @@ Friend manually sends DuitNow/TNG details via WhatsApp
 Customer pays, sends screenshot — WhatsApp chat is the receipt
         ↓
 Admin updates order status in panel
+```
 
+---
 
-API
+## API
 
-Public
+### Public
 
-MethodEndpointDescriptionGET/api/productsList all active productsGET/api/products/:slugProduct detail + optionsPOST/api/ordersSubmit order
+| Method | Endpoint               | Description            |
+| ------ | ---------------------- | ---------------------- |
+| GET    | `/api/products`        | List all active products |
+| GET    | `/api/products/:slug`  | Product detail + options |
+| POST   | `/api/orders`          | Submit order           |
 
-Admin (password-protected via x-admin-token header)
+### Admin (password-protected via `x-admin-token` header)
 
-MethodEndpointDescriptionGET/api/admin/ordersList all ordersPATCH/api/admin/orders/:id/statusUpdate order status
+| Method | Endpoint                         | Description         |
+| ------ | -------------------------------- | ------------------- |
+| GET    | `/api/admin/orders`              | List all orders     |
+| PATCH  | `/api/admin/orders/:id/status`   | Update order status |
 
+---
 
-Getting Started
+## Getting Started
 
-Prerequisites
+### Prerequisites
 
+- Node.js 18+
+- PostgreSQL (local or Railway)
+- pnpm (recommended) or npm
 
-Node.js 18+
-PostgreSQL (local or Railway)
-pnpm (recommended) or npm
+### Setup
 
-
-Setup
-
-bash# Clone
+```bash
+# Clone
 git clone https://github.com/jeremytey/3d-print-studio.git
 cd 3d-print-studio
 
@@ -137,59 +160,58 @@ pnpm prisma db seed
 # Run dev servers
 cd server && pnpm dev       # http://localhost:3001
 cd client && pnpm dev       # http://localhost:5173
+```
 
+---
 
-Environment Variables
+## Environment Variables
 
-server/.env
+### server/.env
 
+```
 DATABASE_URL=postgresql://user:password@localhost:5432/printdb
 ADMIN_TOKEN=your-secret-token-here
 PORT=3001
 CLIENT_URL=http://localhost:5173
+```
 
-client/.env
+### client/.env
 
+```
 VITE_API_URL=http://localhost:3001
+```
 
+---
 
-Deployment
+## Deployment
 
-Backend → Railway
+**Backend → Railway**
+1. Connect GitHub repo to Railway
+2. Set root directory to `/server`
+3. Add environment variables in Railway dashboard
+4. Railway auto-detects Node.js and runs `pnpm build && pnpm start`
 
+**Frontend → Vercel**
+1. Connect GitHub repo to Vercel
+2. Set root directory to `/client`
+3. Add `VITE_API_URL` pointing to Railway URL
+4. Vercel auto-detects Vite
 
-Connect GitHub repo to Railway
-Set root directory to /server
-Add environment variables in Railway dashboard
-Railway auto-detects Node.js and runs pnpm build && pnpm start
+---
 
+## Roadmap
 
-Frontend → Vercel
+- [ ] Real product photos (replacing placeholders)
+- [ ] Confirmed colour palette + hex values
+- [ ] All 8 country variants seeded
+- [ ] WhatsApp Business API (optional upgrade from wa.me link)
+- [ ] SSM registration → Stripe/Billplz payment gateway
+- [ ] Product image uploads via Cloudinary
 
+---
 
-Connect GitHub repo to Vercel
-Set root directory to /client
-Add VITE_API_URL pointing to Railway URL
-Vercel auto-detects Vite
+## Author
 
-
-
-Roadmap
-
-
- Real product photos (replacing placeholders)
- Confirmed colour palette + hex values
- All 8 country variants seeded
- WhatsApp Business API (optional upgrade from wa.me link)
- SSM registration → Stripe/Billplz payment gateway
- Product image uploads via Cloudinary
-
-
-
-Author
-
-Jeremy Tey Jie Ming
-
-Computer Science, Sunway University
-
-github.com/jeremytey · jeremy8598@gmail.com
+**Jeremy Tey Jie Ming**  
+Computer Science, Sunway University  
+[github.com/jeremytey](https://github.com/jeremytey) · jeremy8598@gmail.com
