@@ -20,4 +20,14 @@ export const productsRepository = {
         },
       },
     }),
+
+  findManyWithOptionsByIds: (ids: string[]) =>
+    prisma.product.findMany({
+      where: { id: { in: ids } },
+      include: {
+        optionGroups: {
+          include: { optionValues: true },
+        },
+      },
+    }),
 };
