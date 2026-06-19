@@ -1,6 +1,7 @@
 // server/src/controllers/products.controller.ts
 import { Request, Response, NextFunction } from "express";
 import { productsService } from "../services/products.service";
+import { AppError } from "../utils/AppError";
 
 export const productsController = {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
@@ -13,11 +14,15 @@ export const productsController = {
   },
 
   getBySlug: async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const product = await productsService.getBySlug(req.params.slug);
-      res.json({ status: "success", data: product });
-    } catch (err) {
-      next(err);
+  try {
+    const { slug } = req.params;
+    if (typeof slug !== "string") {
+      throw new AppError("Invalid product slug.", 400);
     }
-  },
+    const product = await productsService.getBySlug(slug);
+    res.json({ status: "success", data: product });
+  } catch (err) {
+    next(err);
+  }
+},
 };
