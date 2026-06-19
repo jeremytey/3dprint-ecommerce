@@ -14,9 +14,9 @@ export const adminAuth = (
     return next(new AppError("Server misconfiguration: ADMIN_TOKEN not set.", 500));
   }
 
-  if (!clientToken || clientToken !== token) {
-    return next(new AppError("Unauthorized.", 401));
-  }
+  if (!clientToken || Array.isArray(clientToken) || clientToken !== token) {
+  return next(new AppError("Unauthorized.", 401));
+}
 
   next();
 };

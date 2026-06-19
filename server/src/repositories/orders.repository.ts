@@ -1,9 +1,23 @@
 // server/src/repositories/orders.repository.ts
 import { prisma } from "../lib/prisma";
-import { CreateOrderInput } from "../validators/order.schema";
+
+interface OrderItemWithName {
+  productId: string;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  selectedOptions: Record<string, string>;
+}
+
+interface CreateOrderData {
+  customerName: string;
+  customerPhone: string;
+  totalAmount: number;
+  items: OrderItemWithName[];
+}
 
 export const ordersRepository = {
-  create: (data: CreateOrderInput) =>
+  create: (data: CreateOrderData) =>
     prisma.order.create({
       data: {
         customerName: data.customerName,
@@ -12,7 +26,7 @@ export const ordersRepository = {
         items: {
           create: data.items.map((item) => ({
             productId: item.productId,
-            productName: "",   // resolved in service layer
+            productName: item.productName,
             quantity: item.quantity,
             unitPrice: item.unitPrice,
             selectedOptions: item.selectedOptions,
