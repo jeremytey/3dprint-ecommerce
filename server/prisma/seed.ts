@@ -3,9 +3,8 @@
 // When real colour labels/hex values arrive, update PLACEHOLDER_OPTIONS only.
 // Nothing else in this file needs to change.
 
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../src/lib/prisma";
 
-const prisma = new PrismaClient();
 
 // ─────────────────────────────────────────────
 // EDIT THIS BLOCK WHEN REAL COLOURS ARRIVE
