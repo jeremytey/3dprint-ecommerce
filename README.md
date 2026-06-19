@@ -1,6 +1,6 @@
 # 3D Print Studio — E-Commerce Platform
 
-A mobile-first e-commerce platform for a Malaysian 3D printing business, built as a full-stack portfolio project. Customers configure a product part-by-part, submit an order, and are redirected to WhatsApp with a pre-filled order summary — no payment gateway required (out-of-band DuitNow/TNG flow).
+A mobile-first e-commerce platform for a Malaysian 3D printing business, built as a full-stack website. Customers configure a product part-by-part, submit an order, and are redirected to WhatsApp with a pre-filled order summary — no payment gateway required (out-of-band DuitNow/TNG flow).
 
 ---
 
@@ -196,17 +196,6 @@ VITE_API_URL=http://localhost:3001
 2. Set root directory to `/client`
 3. Add `VITE_API_URL` pointing to Railway URL
 4. Vercel auto-detects Vite
-
----
-
-## Roadmap
-
-- [ ] Real product photos (replacing placeholders)
-- [ ] Confirmed colour palette + hex values
-- [ ] All 8 country variants seeded
-- [ ] WhatsApp Business API (optional upgrade from wa.me link)
-- [ ] SSM registration → Stripe/Billplz payment gateway
-- [ ] Product image uploads via Cloudinary
 
 ---
 
