@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { productsApi, type Product } from "@/api/products";
 import ProductCard from "@/components/ProductCard";
 
