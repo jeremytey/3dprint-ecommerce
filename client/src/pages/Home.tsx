@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { productsApi, type Product } from "@/api/products";
+import ProductCard from "@/components/ProductCard";
 
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -21,18 +22,11 @@ function Home() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">3D Print Studio</h1>
-      <div className="grid grid-cols-2 gap-4">
-        {products.map((product) => (
-          <Link
-            key={product.id}
-            to={`/product/${product.slug}`}
-            className="border rounded p-3"
-          >
-            <p className="font-medium">{product.name}</p>
-            <p className="text-sm text-gray-600">RM {product.basePrice.toFixed(2)}</p>
-          </Link>
-        ))}
-      </div>
+      <div className="grid grid-cols-2 gap-3 p-4">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
     </div>
   );
 }
