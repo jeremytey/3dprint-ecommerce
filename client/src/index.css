@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+@theme {
+  /* ── Colours ── */
+  --color-canvas:  #F8F6F3;
+  --color-surface: #FFFFFF;
+  --color-ink:     #1A1A1A;
+  --color-muted:   #7A7672;
+  --color-accent:  #C4714A;
+  --color-border:  #E8E4E0;
+
+  /* ── Type scale ── */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.5rem;
+
+  /* ── Radii ── */
+  --radius-card:   12px;
+  --radius-button: 6px;
+
+  /* ── Base unit (reference only — use multiples in components) ── */
+  --space-unit: 4px;
+}
+
+/* Base resets */
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+}
