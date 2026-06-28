@@ -76,6 +76,7 @@ function PartConfigurator({ product }: PartConfiguratorProps) {
     );
 
     setAdded(true);
+    setQuantity(1);
     setValidationError(null);
   };
 
@@ -84,7 +85,7 @@ function PartConfigurator({ product }: PartConfiguratorProps) {
       {/* Back navigation */}
       <div className="flex items-center px-4 py-3 border-b border-border">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="flex items-center gap-1.5 text-xs text-muted active:text-ink transition-colors"
           aria-label="Go back"
         >

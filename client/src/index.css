@@ -29,5 +29,6 @@ body {
   background-color: var(--color-canvas);
   color: var(--color-ink);
   font-size: var(--text-base);
+  font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }

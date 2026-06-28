@@ -28,29 +28,29 @@ function Home() {
   );
 
   return (
-    <main>
+    <main className="w-full">
       {/* Hero */}
-      <section className="px-4 pt-10 pb-8 flex flex-col gap-3">
-        <p className="text-xs font-semibold uppercase tracking-widest text-accent">
+      <section className="px-4 pt-10 pb-8 md:px-16 md:pt-20 md:pb-16 lg:px-32 max-w-6xl mx-auto">
+        <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-3">
           nothing crazy.co
         </p>
-        <h1 className="text-xl font-semibold text-ink leading-snug max-w-[260px]">
+        <h1 className="text-xl md:text-4xl lg:text-5xl font-semibold text-ink leading-snug max-w-[260px] md:max-w-2xl mb-3">
           Custom 3D printed pieces, made to order.
         </h1>
-        <p className="text-sm text-muted leading-relaxed max-w-[300px]">
+        <p className="text-sm md:text-base text-muted leading-relaxed max-w-[300px] md:max-w-lg">
           Pick your colours. Place your order. We handle the rest.
         </p>
       </section>
 
       {/* Divider */}
-      <div className="h-px bg-border mx-4" />
+      <div className="h-px bg-border mx-4 md:mx-16 lg:mx-32" />
 
       {/* Product grid */}
-      <section className="px-4 pt-6 pb-12">
+      <section className="px-4 pt-6 pb-12 md:px-16 lg:px-32 max-w-6xl mx-auto">
         <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-4">
           Shop
         </p>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
