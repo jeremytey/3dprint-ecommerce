@@ -14,9 +14,14 @@ function OrderButton() {
   const [error, setError] = useState<string | null>(null);
 
   const handleOrder = async () => {
+    if (items.length === 0) {
+        setError("Your cart is empty.");
+        return;
+    }
+
     if (!name.trim() || !phone.trim()) {
-      setError("Please enter your name and phone number.");
-      return;
+        setError("Please enter your name and phone number.");
+        return;
     }
 
     setLoading(true);

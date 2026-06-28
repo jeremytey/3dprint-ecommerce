@@ -22,7 +22,7 @@ function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
       )}
 
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-full max-w-sm flex flex-col bg-surface transition-transform duration-300 ${
+        className={`fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm flex flex-col bg-surface transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
