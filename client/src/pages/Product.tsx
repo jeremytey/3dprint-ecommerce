@@ -29,12 +29,23 @@ function Product() {
   );
 
   return (
-    <div className="max-w-lg mx-auto md:max-w-4xl md:px-16 lg:px-32">
-      <div className="md:grid md:grid-cols-2 md:gap-12 md:pt-10">
+  <div className="max-w-5xl mx-auto">
+    <div className="md:grid md:grid-cols-2 md:min-h-screen">
+      {/* Left — image */}
+      <div className="w-full aspect-square md:aspect-auto md:sticky md:top-16 md:h-[calc(100vh-4rem)] bg-canvas flex flex-col items-center justify-center gap-1 relative overflow-hidden">
+        <span className="text-[10px] font-mono text-muted/60 tracking-widest uppercase">nothing crazy.co</span>
+        <span className="text-[9px] text-muted/40">image coming soon</span>
+        <div className="absolute bottom-0 right-0 w-24 h-24 opacity-20"
+          style={{ background: "radial-gradient(circle at 100% 100%, var(--color-accent), transparent 70%)" }} />
+      </div>
+
+      {/* Right — configurator */}
+      <div className="md:overflow-y-auto">
         <PartConfigurator product={product} />
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default Product;

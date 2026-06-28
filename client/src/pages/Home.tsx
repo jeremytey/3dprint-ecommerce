@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { productsApi, type Product } from "@/api/products";
 import ProductCard from "@/components/ProductCard";
+import MarqueeBanner from "@/components/MarqueeBanner";
 
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -41,7 +42,7 @@ function Home() {
           Pick your colours. Place your order. We handle the rest.
         </p>
       </section>
-
+      <MarqueeBanner />
       {/* Divider */}
       <div className="h-px bg-border mx-4 md:mx-16 lg:mx-32" />
 

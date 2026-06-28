@@ -94,21 +94,6 @@ function PartConfigurator({ product }: PartConfiguratorProps) {
         </button>
       </div>
 
-      {/* Product image */}
-      <div className="w-full aspect-square bg-canvas flex flex-col items-center justify-center gap-1 relative overflow-hidden">
-        <span className="text-[10px] font-mono text-muted/60 tracking-widest uppercase">
-          nothing crazy.co
-        </span>
-        <span className="text-[9px] text-muted/40">image coming soon</span>
-        <div
-          className="absolute bottom-0 right-0 w-16 h-16 opacity-20"
-          style={{
-            background:
-              "radial-gradient(circle at 100% 100%, var(--color-accent), transparent 70%)",
-          }}
-        />
-      </div>
-
       {/* Content */}
       <div className="flex flex-col gap-6 px-4 pt-5 pb-10">
         {/* Name + price */}
